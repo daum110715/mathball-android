@@ -1,0 +1,7 @@
+bin/
+.buildozer/
+__pycache__/
+*.pyc
+*.pyo
+settings.json
+.pytest_cache/
