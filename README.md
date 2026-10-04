@@ -19,7 +19,7 @@ gh run download --name mathball-debug-apk   # 取产物
 `requirements` 可以用工作流参数临时覆盖,方便换 Python / pygame 版本重试:
 
 ```bash
-gh workflow run build.yml -f requirements="hostpython3==3.11.9,python3==3.11.9,pygame"
+gh workflow run build.yml -f requirements="hostpython3==3.10.14,python3==3.10.14,pygame"
 ```
 
 ## 本地运行
@@ -37,7 +37,7 @@ python main.py
 - **`IS_MOBILE` 增加 `ANDROID_ARGUMENT` 判断** —— p4a 编出来的 CPython 里 `sys.platform` 是 `linux` 而不是 `android`,只按 `sys.platform` 判断的话全屏永远不生效。
 - **`settings.json` 改写 `ANDROID_PRIVATE`** —— APK 内的脚本目录只读,原先写同目录会静默失败,导致音量、解锁球、砖块指数每次启动重置。
 
-`buildozer.spec` 里另外钉了两处:`android.archs = arm64-v8a`(Android 14 起拒绝只含 32 位原生库的应用,而 buildozer 默认正是 32 位),以及把 `hostpython3` / `python3` 一起钉在 `3.11.9`(p4a 的 pygame recipe 是 2.1.0,属于 distutils 时代,Python 3.12+ 已移除 distutils;而这两个版本不一致会被 p4a 直接拒绝)。
+`buildozer.spec` 里另外钉了两处:`android.archs = arm64-v8a`(Android 14 起拒绝只含 32 位原生库的应用,而 buildozer 默认正是 32 位),以及把 `hostpython3` / `python3` 一起钉在 `3.10.14`(p4a 的 pygame recipe 停在 2.1.0,它 include 的 `longintrepr.h` 自 Python 3.11 起被移进 `Include/cpython/`,所以只能用 3.10 及以下;这两个版本不一致也会被 p4a 直接拒绝)。
 
 ## 已知缺失
 

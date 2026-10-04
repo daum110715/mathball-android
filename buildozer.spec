@@ -12,9 +12,10 @@ source.exclude_patterns = *.pyc,*.pyo,buildozer.spec,README.md
 version = 0.1.0
 android.numeric_version = 1
 
-# pygame 2.1.0 是 distutils 时代的产物，Python 3.12+ 已移除 distutils，必须钉在 3.11
+# p4a 的 pygame recipe 停在 2.1.0，只支持到 Python 3.10
+# （它 include 了 longintrepr.h，而该头文件自 3.11 起被移进 Include/cpython/）
 # hostpython3 与 python3 必须同版本，只钉一个会被 p4a 直接拒绝
-requirements = hostpython3==3.11.9,python3==3.11.9,pygame
+requirements = hostpython3==3.10.14,python3==3.10.14,pygame
 
 orientation = portrait
 fullscreen = 1
